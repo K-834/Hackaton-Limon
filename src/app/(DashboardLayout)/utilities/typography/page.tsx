@@ -7,7 +7,7 @@ import BlankCard from '@/app/(DashboardLayout)/components/shared/BlankCard';
 
 const TypographyPage = () => {
   return (
-    <PageContainer title="Typography" description="this is Typography">
+    <PageContainer title="Liga" description="this is Typography">
 
       <Grid container spacing={3}>
         <Grid item sm={12}>
