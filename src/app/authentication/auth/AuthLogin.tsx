@@ -37,7 +37,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
           htmlFor="username"
           mb="5px"
         >
-          Username
+          Código UTP
         </Typography>
         <CustomTextField variant="outlined" fullWidth />
       </Box>
@@ -49,22 +49,22 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
           htmlFor="password"
           mb="5px"
         >
-          Password
+          Contraseña
         </Typography>
         <CustomTextField type="password" variant="outlined" fullWidth />
       </Box>
       <Stack
-        justifyContent="space-between"
+        justifyContent="end"
         direction="row"
         alignItems="center"
-        my={2}
+        my={3}
       >
-        <FormGroup>
+        {/* <FormGroup>
           <FormControlLabel
             control={<Checkbox defaultChecked />}
             label="Remeber this Device"
           />
-        </FormGroup>
+        </FormGroup> */}
         <Typography
           component={Link}
           href="/"
@@ -74,13 +74,14 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
             color: "primary.main",
           }}
         >
-          Forgot Password ?
+          Reestablecer contraseña?
         </Typography>
       </Stack>
     </Stack>
     <Box>
       <Button
-        color="primary"
+      style={{ backgroundColor: "#0661FC", color: "white" }}
+        // color="primary"
         variant="contained"
         size="large"
         fullWidth
@@ -88,7 +89,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
         href="/"
         type="submit"
       >
-        Sign In
+        Iniciar Sesión
       </Button>
     </Box>
     {subtitle}
