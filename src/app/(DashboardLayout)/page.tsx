@@ -8,15 +8,25 @@ import RecentTransactions from '@/app/(DashboardLayout)/components/dashboard/Rec
 import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/ProductPerformance';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
+import Cursos from '@/app/(DashboardLayout)/components/dashboard/Cursos';
 
 const Dashboard = () => {
   return (
-    <PageContainer title="Dashboard" description="this is Dashboard">
+    <PageContainer title="UTP+squad" description="this is Dashboard">
       <Box>
         <Grid container spacing={3}>
+          
+          <Grid item xs={12} lg={12}>
+            <Cursos/>
+          </Grid>
+
+
+
           <Grid item xs={12} lg={8}>
             <SalesOverview />
           </Grid>
+
+          
           <Grid item xs={12} lg={4}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -27,15 +37,19 @@ const Dashboard = () => {
               </Grid>
             </Grid>
           </Grid>
+
           <Grid item xs={12} lg={4}>
             <RecentTransactions />
           </Grid>
+
           <Grid item xs={12} lg={8}>
             <ProductPerformance />
           </Grid>
+
           <Grid item xs={12}>
             <Blog />
           </Grid>
+
         </Grid>
       </Box>
     </PageContainer>
