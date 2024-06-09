@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
+import '@/app/(DashboardLayout)/components/kanban/estilosKanban.css';
 
 interface Project {
     id: number;
@@ -44,6 +45,16 @@ const Proyectos: React.FC = () => {
     const [sectionId, setSectionId] = useState<string | null>(null);
     const [studentCode, setStudentCode] = useState<string | null>(null);
     const [nameCurso, setNameCurso] = useState<string | null>(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    
+    const [formNameProject, setFormNameProject] = useState('');
+    const [formEvaluation, setFormEvaluation] = useState('');
+    const [formType, setFormType] = useState('');
+    
+    const [isAddingProject, setIsAddingProject] = useState(false);
+
+    console.log(formNameProject, formEvaluation, formType);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search);
@@ -101,6 +112,38 @@ const Proyectos: React.FC = () => {
         return leader ? leader.fullname : "No se encontró líder";
     };
 
+    const handleAddProject = () => {
+        setIsModalOpen(prev => !prev);
+    }
+
+    const handleAddProjectSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsAddingProject(true);
+
+        const requestBody = {
+            name: formNameProject,
+            evaluation: formEvaluation,
+            typeId: formType,
+            groupId: "CS1011"
+        };
+
+        const response = await fetch(`http://143.110.156.21:8080/api/projects/create-new-project`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if(response.ok) {
+            const data = await response.json();
+            console.log(data);
+        }
+        else if(response.status === 404) {
+            
+        }
+    }
+
     
     return (
         <PageContainer
@@ -117,7 +160,7 @@ const Proyectos: React.FC = () => {
                         }}
                     >
                         <h2>{`${nameCurso || " "}  - ${sectionId || " "}`}</h2>
-                        <Button variant="outlined">Añadir proyecto</Button>
+                        <Button variant="outlined" onClick={() => handleAddProject()}>Añadir proyecto</Button>
                     </div>
                     <Table aria-label="simple table" sx={{ whiteSpace: "wrap", mt: 2 }}>
                         <TableHead>
@@ -185,6 +228,37 @@ const Proyectos: React.FC = () => {
                                     </TableCell>
                                 </TableRow>
                             ))}
+                            <div className={`canvas-modal ${isModalOpen ? "" :"hidden"}`}>
+                                <div className='projects-blackwall' onClick={() => setIsModalOpen(prev => !prev)}>
+                                    
+                                </div>
+                                <div className='projects-modal'>
+                                    <h2 className='title'>Añadir proyecto</h2>
+                                    <form className='form-add-project' onSubmit={handleAddProjectSubmit}>
+                                        <div className='input-form'>
+                                            <label htmlFor="name">Nombre del proyecto</label>
+                                            <input type="text" id="name" name="name" onChange={(e) => setFormNameProject(e.target.value)}/>
+                                        </div>
+                                        <div className='input-form'>
+                                            <label htmlFor="evaluation">Evaluación</label>
+                                            <select name="evaluation" id="evaluation" onChange={(e) => setFormEvaluation(e.target.value)}>
+                                                <option value="TA1">Tarea Academica 1</option>
+                                                <option value="TF">Trabajo Final</option>
+                                            </select>
+                                        </div>
+                                        <div className='input-form'>
+                                            <label htmlFor="type">Tipo</label>
+                                            <select name="type" id="type" onChange={(e) => setFormType(e.target.value)}>
+                                                <option value="ET">Ensayos y Trabajos Escritos</option>
+                                                <option value="PI">Proyectos de Investigación</option>
+                                                <option value="PP">Proyectos Prácticos</option>
+                                                <option value="TG">Trabajos en Grupo</option>
+                                            </select>
+                                        </div>                                        
+                                        <button className='btn-submit-task' type="submit">AÑADIR PROYECTO</button>
+                                    </form>
+                                </div>
+                            </div>
                         </TableBody>
                     </Table>
                 </Box>
