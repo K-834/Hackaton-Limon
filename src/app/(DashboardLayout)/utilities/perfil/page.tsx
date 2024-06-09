@@ -71,10 +71,10 @@ const Shadow = () => {
             }}>
               <h3 style={{fontWeight: 'bold', marginBottom: '0.5rem'}}>Logros</h3>
               <div style={{display: 'flex', gap: '0.5rem'}}>
-                <div style={{width: '4rem', height: '4rem', backgroundColor: '#fed7d7', borderRadius: '0.5rem'}}></div>
-                <div style={{width: '4rem', height: '4rem', backgroundColor: '#fefcbf', borderRadius: '0.5rem'}}></div>
-                <div style={{width: '4rem', height: '4rem', backgroundColor: '#fbd38d', borderRadius: '0.5rem'}}></div>
-                <div style={{width: '4rem', height: '4rem', backgroundColor: '#c6f6d5', borderRadius: '0.5rem'}}></div>
+                <div style={{width: '4rem', height: '4rem', backgroundColor: '#fed7d7', borderRadius: '0.5rem'}}> <img src="/images/insignias/caballero.png" alt="" style={{width: '4rem', height: '4rem'}}/> </div>
+                <div style={{width: '4rem', height: '4rem', backgroundColor: '#fefcbf', borderRadius: '0.5rem'}}> <img src="/images/insignias/elixir.png" alt="" style={{width: '4rem', height: '4rem'}}/>  </div>
+                <div style={{width: '4rem', height: '4rem', backgroundColor: '#fbd38d', borderRadius: '0.5rem'}}> <img src="/images/insignias/medalla-de-oro.png" alt="" style={{width: '4rem', height: '4rem'}}/>  </div>
+                <div style={{width: '4rem', height: '4rem', backgroundColor: '#c6f6d5', borderRadius: '0.5rem'}}> <img src="/images/insignias/tienda-de-campana.png" alt="" style={{width: '4rem', height: '4rem'}}/>  </div>
               </div>
               <div style={{textAlign: 'right', marginTop: '0.5rem'}}>
                 <a href="#" style={{color: '#4299e1'}}>VER TODOS</a>
