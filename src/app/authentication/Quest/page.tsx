@@ -1,19 +1,21 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+
 import { Grid, Box, Card, Typography, Button } from "@mui/material";
 // components
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 
 const questions = [
   {
-    question: "Si pudieras tener un superpoder, ¿cuál elegirías?",
+    question: "¿Cuáles son tus hobbies e intereses?",
     answers: [
-      "a) Crear inventos asombrosos de la nada.",
-      "b) Absorber conocimientos con solo tocar un libro.",
-      "c) Convertir tus ideas en obras de arte instantáneamente.",
-      "d) Tener la fuerza y resistencia de un superhéroe.",
-      "e) Poder hablar y entender todos los idiomas del mundo.",
+      "Bailar",
+      "Deportes",
+      "Tecnología",
+      "Videojuegos",
+      "Música",
+      "Lectura",
     ],
   },
   {
@@ -78,17 +80,70 @@ const questions = [
   },
 ];
 
+const getClanId = (answers: string[]) => {
+  const answerCounts: { [key: string]: number } = {
+    "a": 0,
+    "b": 0,
+    "c": 0,
+    "d": 0,
+    "e": 0,
+  };
+
+  answers.forEach((answer) => {
+    const key = answer.charAt(0); 
+    if (key in answerCounts) {
+      answerCounts[key as keyof typeof answerCounts]++;
+    }
+  });
+
+  let maxKey = 'a';
+  for (const key in answerCounts) {
+    if (answerCounts[key as keyof typeof answerCounts] > answerCounts[maxKey]) {
+      maxKey = key;
+    }
+  }
+
+  return parseInt(maxKey, 36) - 10 + 1; 
+};
+
 const PlantillaPregunta = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const [firstQuestionAnswers, setFirstQuestionAnswers] = useState<string[]>(
+    []
+  );
+  const [otherQuestionAnswers, setOtherQuestionAnswers] = useState<string[]>(
+    []
+  );
 
   const handleNextQuestion = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    setSelectedAnswer(null);
+    if (currentQuestionIndex === 0) {
+      setFirstQuestionAnswers(selectedAnswers);
+    } else {
+      setOtherQuestionAnswers((prevAnswers) => [
+        ...prevAnswers,
+        selectedAnswers[0],
+      ]);
+    }
+
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setSelectedAnswers([]);
+    } else {
+      console.log("Respuestas a la primera pregunta:", firstQuestionAnswers);
+    console.log("Respuestas a las demás preguntas:", otherQuestionAnswers);
+    const clanId = getClanId(otherQuestionAnswers);
+    console.log("El ID del clan es:", clanId); 
+    window.location.href = "/";
+  }
   };
 
   const handleAnswerClick = (answer: string) => {
-    setSelectedAnswer(answer);
+    if (currentQuestionIndex === 0) {
+      setSelectedAnswers((prevAnswers) => [...prevAnswers, answer]);
+    } else {
+      setSelectedAnswers([answer]);
+    }
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -187,8 +242,10 @@ const PlantillaPregunta = () => {
                     margin: "5px",
                     width: "100%",
                     borderRadius: "5px",
-                    backgroundColor:
-                      selectedAnswer === answer ? "#d3d3d3" : "white",
+                    backgroundColor: selectedAnswers.includes(answer)
+                      ? "#d3d3d3"
+                      : "white",
+
                     color: "black",
                     fontSize: "20px",
                     padding: "5px",
@@ -227,27 +284,26 @@ const PlantillaPregunta = () => {
                     }}
                     variant="contained"
                     onClick={handleNextQuestion}
-                    disabled={selectedAnswer === null}
+                    disabled={selectedAnswers.length === 0}
                   >
                     Continuar
                   </Button>
                 ) : (
-                  <Link href="/" passHref>
-                    <Button
-                      style={{
-                        backgroundColor: "#5138f2",
-                        color: "white",
-                        fontSize: "46px",
-                        borderRadius: "20px",
-                        padding: "10px 60px",
-                        margin: "0 10",
-                        textDecoration: "none",
-                      }}
-                      variant="contained"
-                    >
-                      Continuar
-                    </Button>
-                  </Link>
+                  <Button
+                    style={{
+                      backgroundColor: "#5138f2",
+                      color: "white",
+                      fontSize: "46px",
+                      borderRadius: "20px",
+                      padding: "10px 60px",
+                      margin: "0 10",
+                      textDecoration: "none",
+                    }}
+                    variant="contained"
+                    onClick={handleNextQuestion}
+                  >
+                    Continuar
+                  </Button>
                 )}
               </Box>
             </Box>
