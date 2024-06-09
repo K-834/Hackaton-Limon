@@ -36,7 +36,7 @@ const Menuitems = [
     id: uniqueId(),
     title: "Perfil",
     icon: IconUserPlus,
-    href: "/utilities/shadow",
+    href: "/utilities/perfil",
   }
   // {
   //   navlabel: true,
