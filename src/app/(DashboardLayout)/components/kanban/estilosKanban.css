@@ -7,6 +7,7 @@
   --grayUTP: #E4EBF2;
   --blue1: #011640;
   --pink1: #F2638E;
+  --green1: #54e39e;
 }
 
 /* Estilos generales */
@@ -314,3 +315,224 @@ header .user-container .icon img {
   cursor: not-allowed; /* Cambia el cursor a no permitido */
   opacity: 0.3; /* Ajusta la opacidad */
 }
+
+/*
+ESTILOS PAGINA GRUPOS
+*/
+
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: #e5f1fc;
+  color: #333;
+  text-align: center;
+} */
+
+.grupos-page {
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+
+    .group {
+      background-color: #14284e;
+      color: white;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px;
+      border-radius: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .group:active {
+      opacity: 0.8;
+    }
+
+    .selected {
+      background-color: #ff8fb1;
+    }
+  }
+
+  .integrantes {
+    margin-top: 3em;
+
+    .header-integrantes {
+      display: flex;
+      justify-content: space-evenly;
+      align-content: center;
+      /* border: 1px solid blue; */
+
+      .integrantes-title {
+        /* border: 1px solid green; */
+        font-size: 3em;
+        align-self: center;
+      }
+
+      .join-button {
+        background-color: var(--green1);
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 0.5em 1em;
+        border-radius: 5px;
+        font-size: 1.2em;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        /* margin-top: 20px; */
+      }
+      
+      .join-button:hover {
+        /* background-color: #45cc88; */
+        opacity: 0.8;
+      }
+    }
+
+    .cards {
+      display: flex;
+      justify-content: start;
+      gap: 1em;
+      flex-wrap: wrap;
+      margin-top: 2em;
+
+      .card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 300px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: left;
+
+        .image-container {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          overflow: hidden;
+          width: 100%;
+
+          img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+          }
+        }
+
+        .card-body {
+          padding: 1em;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5em;
+
+          h2 {
+            margin-bottom: 0.5em;
+          }
+
+          p {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.3em;
+            line-height: 1.5em;
+          }
+
+          .field {
+            display: flex;
+            gap: 0.5em;
+            align-items: center;
+
+            .icon {
+              width: 27px;
+              fill: var(--black);
+            }
+            
+            .icon-label {
+              font-size: 1em;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/*
+ESTILOS PAGINA PROYECTOS
+*/
+
+.canvas-modal {
+  .projects-blackwall {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .projects-modal {
+    width: 600px;
+    background-color: var(--grayUTP);
+    border-radius: 25px;
+    position: absolute;
+    box-shadow: 0 4px 20px 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2em;
+
+    .title {
+      text-align: center;
+    }
+
+    .form-add-project {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+
+      .input-form {
+        font-family: inherit;
+        font-size: 1.2em;
+        padding: 0.3em;
+        border: none;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+
+        input {
+          padding: 0.5em;
+        }
+
+        select {
+          padding: 0.5em;
+        }      
+      }
+
+      .btn-submit-task {
+        padding: 1em;
+        background-color: var(--blue1);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: 800;
+        font-size: 1.3em;
+        cursor: pointer;
+      }
+    }
+  
+  }
+}
+
+.ditoval {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+
