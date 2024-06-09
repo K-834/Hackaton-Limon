@@ -5,9 +5,10 @@ import { useCourses } from './CourseProvider';
 const Cursos: React.FC = () => {
   const { courses } = useCourses();
 
-  const handleClick = (section_code: string) => {
+  const handleClick = (section_code: string, name_course:string) => {
+    const nameCourse = name_course; 
     const studentCode = 'U00000002'; // Ejemplo de un código de estudiante fijo
-    const newUrl = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}`;
+    const newUrl = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}`;
     window.location.href = newUrl;
   };
 
@@ -18,7 +19,7 @@ const Cursos: React.FC = () => {
           <Card
             className="bg-white shadow-md rounded-lg overflow-hidden"
             style={{ cursor: 'pointer' }}
-            onClick={() => handleClick(course.section_code)}
+            onClick={() => handleClick(course.section_code, course.name_course)}
           >
             <CardMedia
               component="img"
