@@ -86,7 +86,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
         size="large"
         fullWidth
         component={Link}
-        href="/"
+        href="/authentication/login/login_pregun"
         type="submit"
       >
         Iniciar Sesión
