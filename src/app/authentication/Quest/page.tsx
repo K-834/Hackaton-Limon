@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Grid, Box, Card, Typography, Button } from "@mui/material";
 // components
@@ -106,17 +106,45 @@ const getClanId = (answers: string[]) => {
   return parseInt(maxKey, 36) - 10 + 1; 
 };
 
+
 const PlantillaPregunta = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [leagueData, setLeagueData] = useState<any>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const [userData, setUserData] = useState<any>(null);
   const [firstQuestionAnswers, setFirstQuestionAnswers] = useState<string[]>(
     []
   );
   const [otherQuestionAnswers, setOtherQuestionAnswers] = useState<string[]>(
     []
   );
+  useEffect(() => {
+    const url =
+      "http://143.110.156.21:8080/api/projects/league-position/U00000001";
 
-  const handleNextQuestion = () => {
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLeagueData(data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []);
+
+
+
+  const handleNextQuestion = async () => {
     if (currentQuestionIndex === 0) {
       setFirstQuestionAnswers(selectedAnswers);
     } else {
@@ -125,17 +153,39 @@ const PlantillaPregunta = () => {
         selectedAnswers[0],
       ]);
     }
-
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setSelectedAnswers([]);
     } else {
       console.log("Respuestas a la primera pregunta:", firstQuestionAnswers);
-    console.log("Respuestas a las demás preguntas:", otherQuestionAnswers);
-    const clanId = getClanId(otherQuestionAnswers);
-    console.log("El ID del clan es:", clanId); 
-    window.location.href = "/";
-  }
+      console.log("Respuestas a las demás preguntas:", otherQuestionAnswers);
+      const clanId = getClanId(otherQuestionAnswers);
+      console.log("El ID del clan es:", clanId)
+  
+      // Aquí es donde enviamos la solicitud POST a la API
+      const response = await fetch('http://143.110.156.21:8080/api/users/profile/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          studentCode:`${userData?.code ?? 'U00000001'}`,
+          hobbies:["Programación"], 
+          clanId:clanId
+        })
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al crear el perfil del usuario');
+      }
+  
+      const data = await response.json();
+      console.log('Perfil del usuario creado con éxito:', data);
+      
+      
+  
+      window.location.href = "/";
+    }
   };
 
   const handleAnswerClick = (answer: string) => {
@@ -194,6 +244,7 @@ const PlantillaPregunta = () => {
               width="100%"
               textAlign="center"
             >
+              
               <img
                 src="/images/logos/utepin.png"
                 alt="ImagenUTP"
