@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
 
@@ -34,19 +34,22 @@ const [grupo, setGrupo] = useState<Group | null>(null);
 const [member, setMember] = useState<GroupMember | null>(null); 
 const [sectionId, setSectionId] = useState<string | null>(null);
 const [studentCode, setStudentCode] = useState<string | null>(null);
+const [nameCurso, setNameCurso] = useState<string | null>(null);
 
 
 useEffect(() => {
 const searchParams = new URLSearchParams(window.location.search);
 setSectionId(searchParams.get('sectionId'));
 setStudentCode(searchParams.get('studentCode'));
+setNameCurso(searchParams.get('nameCourse'));
 
 }, []);
 
 useEffect(() => {
 const requestBody = {
-studentCode: "U00000001",
-sectionId: studentCode
+studentCode: "U00000002",
+sectionId: sectionId,
+nameCourse: nameCurso
 };
 
 const fetchProjects = async () => {
@@ -86,8 +89,12 @@ return leader ? leader.fullname : "No se encontró líder";
 
 return (
 <PageContainer title="Proyectos" description="Donde van los proyectos realizados">
-<DashboardCard title={sectionId || "Sin sección"}>
+<DashboardCard>
 <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
+<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h2>{`${nameCurso || " "}  - ${sectionId || " "}`}</h2>
+        <Button variant="outlined">Añadir proyecto</Button>
+    </div>
 <Table aria-label="simple table" sx={{ whiteSpace: "wrap", mt: 2 }}>
 <TableHead>
     <TableRow>
@@ -135,8 +142,14 @@ return (
         </TableCell>
         <TableCell>
         <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-            {miembroLider()}
+            {miembroLider() || ""}
         </Typography>
+        </TableCell>
+        <TableCell>
+            <Button variant="contained" href={`/Mkanban`}>
+            {/* <Button variant="contained" href={`/mkanban/${project.id}`}> */}
+                Ir
+                </Button>
         </TableCell>
     </TableRow>
     ))}

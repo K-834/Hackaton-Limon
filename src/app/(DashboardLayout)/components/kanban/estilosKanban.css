@@ -1,0 +1,316 @@
+/* Importación de fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+/* Variables globales */
+:root {
+  --black: #232323;
+  --grayUTP: #E4EBF2;
+  --blue1: #011640;
+  --pink1: #F2638E;
+}
+
+/* Estilos generales */
+* {
+  font-family: "Lato", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--black);
+}
+
+h1,h2,h3,h4,h5,p {
+  margin: 0;
+}
+
+/* Estilos del encabezado */
+header {
+  width: 100%;
+  padding: 1.5em 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+header .logo {
+  cursor: pointer;
+}
+
+header .logo img {
+  width: 200px;
+}
+
+header .proyects-container {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+header .proyects-container .proyect-button {
+  width: 85px;
+  height: 80px;
+  background-color: var(--blue1);
+  border-radius: 10px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+header .proyects-container .proyect-button h2 {
+  color: white;
+}
+
+header .proyects-container .proyect-button:active {
+  transform: scale(0.9);
+}
+
+header .proyects-container .selected {
+  background-color: var(--pink1);
+  width: 90px;
+  height: 85px;
+}
+
+header .user-container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+header .user-container .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+header .user-container .info p {
+  font-family: inherit;
+}
+
+header .user-container .info p span {
+  font-weight: bold;
+  margin-left: 0.3em;
+}
+
+header .user-container .info .user-type {
+  text-align: end;
+}
+
+header .user-container .icon img {
+  width: 50px;
+}
+/* Contenedor de columnas de tareas */
+.column-container {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: var(--grayUTP);
+  min-height: 83vh;
+  padding: 2em;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Columna de tareas */
+.column-container .task-column {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 300px;
+}
+
+/* Lista de tareas */
+.column-container .task-column .task-list {
+  width: 100%;
+  height: 100%;
+}
+
+/* Contenedor de una tarea */
+.column-container .task-column .task-list .task-container {
+  background-color: rgb(255, 255, 255);
+  border-radius: 16px;
+  margin: 20px 0;
+  box-shadow: rgba(60, 64, 67, 0.3) 0 1px 2px, rgba(60, 64, 67, 0.15) 0 2px 6px 2px;
+  overflow: hidden;
+}
+
+/* Encabezado de una tarea */
+.column-container .task-column .task-list .task-container .task-header {
+  /* background-color: rgb(96, 96, 192); */
+  color: rgb(255, 255, 255);
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Contenedor de descripción de tarea */
+.column-container .task-column .task-list .task-container .task-description-container {
+  padding: 10px;
+  color: rgb(78, 78, 78);
+}
+
+/* Usuario asignado a la tarea */
+.column-container .task-column .task-list .task-container .task-user-assigned .user-name {
+  color: white;
+  background-color: var(--pink1);
+  margin: 0 1em 1em 1em;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+/* Botón de agregar tarea */
+.button-add {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--blue1);
+  cursor: pointer;
+  position: fixed;
+  right: 3em;
+  bottom: 3em;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.button-add p {
+  font-size: 3em;
+  color: white;
+}
+
+.button-add:active {
+  transform: scale(0.9);
+}
+
+/* Fondo oscuro del modal */
+.blackwall {
+  background-color: black;
+  opacity: 0.3;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Contenedor del modal */
+.modal-container {
+  width: 600px;
+  background-color: var(--grayUTP);
+  border-radius: 25px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 20px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Contenido del modal */
+.modal-container .modal-add-task {
+  width: 100%;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+/* Título del modal */
+.modal-container .modal-add-task h1 {
+  text-align: center;
+}
+
+/* Input del modal */
+.modal-container .modal-add-task .input-modal {
+  font-family: inherit;
+  font-size: 1.2em;
+  padding: 0.3em;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal-container .modal-add-task .input-modal:focus {
+  outline: none;
+}
+
+/* Textarea del modal */
+.modal-container .modal-add-task .textarea-modal {
+  font-family: inherit;
+  font-size: 1.2em;
+  padding: 0.3em;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal-container .modal-add-task .textarea-modal:focus {
+  outline: none;
+}
+
+/* Botón de submit del modal */
+.modal-container .modal-add-task .btn-submit {
+  background-color: var(--blue1);
+  color: white;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.2em;
+  padding: 1em;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-container .modal-add-task .btn-submit:active {
+  opacity: 0.8;
+}
+
+/* Lista de usuarios del modal */
+.modal-container .modal-add-task .usersList {
+  padding: 1em;
+  font-family: inherit;
+}
+
+.modal-container .modal-add-task .usersList:focus {
+  outline: none;
+}
+
+/* Pelota animada */
+.ball {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+/* Clase para ocultar elementos */
+.hidden {
+  display: none;
+}
+
+.column-container #backlog .task-header  {
+  background-color: #6060c0; /* color para tareas en TO DO */
+}
+
+.column-container #doing  .task-header {
+  background-color: #539cae; /* color para tareas en IN PROGRESS */
+}
+
+.column-container #done .task-header {
+  background-color: #e0a574; /* color para tareas en DONE */
+}
+
+
+.desactivado {
+  background-color: #011640; /* Color de fondo para deshabilitados */
+  color: #a9a9a9; /* Color del texto para deshabilitados */
+  cursor: not-allowed; /* Cambia el cursor a no permitido */
+  opacity: 0.3; /* Ajusta la opacidad */
+}
