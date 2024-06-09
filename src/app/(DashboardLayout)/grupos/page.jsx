@@ -81,6 +81,8 @@ const SamplePage = () => {
 
   const handleUnirse = () => {
     console.log('Unirse')
+    const newUrl = `/proyectos?studentCode=${studentCode}&sectionId=${sectionId}&nameCourse=${nameCurso}`;
+    window.location.href = newUrl;
   }
 
   /* console.log(students) */
@@ -99,7 +101,7 @@ const SamplePage = () => {
           <div className="integrantes" >
             <div className="header-integrantes">
                 <h2 className="integrantes-title">INTEGRANTES</h2>
-                <button className="join-button">UNIRTE</button>
+                <button className="join-button" onClick={handleUnirse}>UNIRTE</button>
             </div>
 
             <div className="cards">
