@@ -29,13 +29,13 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: "Liga",
-    icon: IconTypography,
+    icon: IconCopy,
     href: "/utilities/typography",
   },
   {
     id: uniqueId(),
     title: "Perfil",
-    icon: IconCopy,
+    icon: IconUserPlus,
     href: "/utilities/perfil",
   }
   // {
