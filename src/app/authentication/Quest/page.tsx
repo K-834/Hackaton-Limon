@@ -78,7 +78,6 @@ const questions = [
   },
 ];
 
-
 const PlantillaPregunta = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -188,7 +187,8 @@ const PlantillaPregunta = () => {
                     margin: "5px",
                     width: "100%",
                     borderRadius: "5px",
-                    backgroundColor: selectedAnswer === answer ? "#d3d3d3" : "white",
+                    backgroundColor:
+                      selectedAnswer === answer ? "#d3d3d3" : "white",
                     color: "black",
                     fontSize: "20px",
                     padding: "5px",
@@ -241,9 +241,9 @@ const PlantillaPregunta = () => {
                         borderRadius: "20px",
                         padding: "10px 60px",
                         margin: "0 10",
+                        textDecoration: "none",
                       }}
                       variant="contained"
-                      component="a"
                     >
                       Continuar
                     </Button>

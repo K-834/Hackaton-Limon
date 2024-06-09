@@ -44,21 +44,7 @@ const Login2 = () => {
                  La nueva experiencia digital para realizar proyectos
                 </Typography>
               }
-              // subtitle={
-              //   <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-              //     <Typography color="textSecondary" variant="h6" fontWeight="500">
-              //       a
-              //     </Typography>
-              //     <Typography
-              //       component={Link}
-              //       href="/authentication/register"
-              //       fontWeight="500"
-              //       sx={{ textDecoration: "none", color: "primary.main" }}
-              //     >
-              //       Crear cuenta
-              //     </Typography>
-              //   </Stack>
-              // }
+              
             />
           </Card>
         </Grid>
