@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Typography, Grid, Card, Box } from "@mui/material";
+import { Typography, Grid, Card, Box, CardMedia } from "@mui/material";
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
 import BlankCard from "@/app/(DashboardLayout)/components/shared/BlankCard";
@@ -13,14 +13,44 @@ import MonthlyEarnings from "@/app/(DashboardLayout)/components/dashboard/Monthl
 import Cursos from "@/app/(DashboardLayout)/components/dashboard/Cursos";
 
 interface Position {
-  studentCode: string;
+  user: {
+    fullname: string | null;
+    type: string | null;
+    student_code: string;
+    url_img: string | null;
+  };
   points: number;
   position: number;
 }
+interface LeagueImages {
+  [key: number]: string;
+}
+const leagueImages: LeagueImages = {
+  1: "/images/liga/Cliga.svg",
+  2: "/images/liga/Bliga.svg",
+  3: "/images/liga/Cliga.svg",
+  4: "/images/liga/Dliga.svg",
+};
+const compararPuntaje = (leagueData: any) => {
+  const storedUserData = localStorage.getItem("userData");
+  const userData = storedUserData ? JSON.parse(storedUserData) : null;
+
+  if (userData && leagueData && leagueData.data) {
+    const studentCode = userData.code;
+    const positions = leagueData.data.positions;
+    for (let i = 0; i < positions.length; i++) {
+      if (positions[i].user.student_code === studentCode) {
+        return positions[i].points;
+      }
+    }
+  }
+  return null;
+};
 
 const TypographyPage = () => {
   const [leagueData, setLeagueData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
     const url =
@@ -39,16 +69,11 @@ const TypographyPage = () => {
       .catch((error) => {
         setError(error);
       });
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
   }, []);
-  interface LeagueImages {
-    [key: number]: string;
-  }
-  const leagueImages: LeagueImages = {
-    1: "/images/liga/Cliga.svg",
-    2: "/images/liga/Bliga.svg",
-    3: "/images/liga/Cliga.svg",
-    4: "/images/liga/Dliga.svg",
-  };
 
   return (
     <PageContainer title="Liga" description="this is Typography">
@@ -57,88 +82,106 @@ const TypographyPage = () => {
           <Grid item xs={12} lg={8}>
             <Grid item sm={12}>
               <DashboardCard title="LIGA">
-                <Grid
-                  container
-                  spacing={2}
-                  display={"flex"}
-                  flexDirection={"column"}
-                  height={"71vh"}
-                >
+                <Grid container spacing={2} justifyContent="center">
                   {leagueData && (
                     <>
-                      {/* <Typography variant="h6">
-                        League ID: {leagueData.data.userEstadistics.league.id}
-                      </Typography>
-                      <Typography variant="h6">
-                        League Description:{" "}
-                        {leagueData.data.userEstadistics.league.description}
-                      </Typography>
-                      <Typography variant="h6">
-                        Current Points:{" "}
-                        {leagueData.data.userEstadistics.currentPoints}
-                      </Typography>
-                      <Typography variant="h6">
-                        Missing Points:{" "}
-                        {leagueData.data.userEstadistics.missingPoints}
-                      </Typography>
-                      <Typography variant="h6">Positions:</Typography> */}
-
-                      <img
-                        src={
-                          leagueImages[
-                            leagueData.data.userEstadistics.league.id
-                          ]
-                        }
-                        alt="Liga"
-                        style={{ maxWidth: "100%" }}
-                      />
-                      <Typography
-                        variant="h2"
-                        textAlign={"center"}
-                        padding={"10px"}
+                      <Box
+                        display={"flex"}
+                        flexDirection={"column"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
                       >
-                        {leagueData.data.userEstadistics.league.id}
-                      </Typography>
-                      <Typography
-                        variant="h2"
-                        textAlign={"center"}
-                        padding={"10px"}
-                      >
-                        {leagueData.data.userEstadistics.league.description}
-                      </Typography>
+                        <img
+                          src={
+                            leagueImages[
+                              leagueData.data.userEstadistics.league.id
+                            ]
+                          }
+                          alt="Liga"
+                          style={{ width: "90px" }}
+                        />
+                        <Typography
+                          variant="h2"
+                          textAlign={"center"}
+                          padding={"10px"}
+                        >
+                          {leagueData.data.userEstadistics.league.description}{" "}
+                        </Typography>
+                      </Box>
 
                       {leagueData.data.positions.map(
                         (position: Position, index: number) => (
-                          <div key={position.studentCode}>
-                            <Grid
-                              container
-                              justifyContent="center"
-                              padding={"10px"}
+                          <Grid item xs={12} key={position.user.student_code}>
+                          <Grid
+                            container
+                            justifyContent="space-between"
+                            alignItems="center"
+                            marginTop={"15px"}
+                            style={{
+                              backgroundColor: position.user.student_code === userData?.code ? '#f0f0f0' : '#ffffff',
+                            }}
+                          >
+                            <Box
+                              display={"flex"}
+                              flexDirection={"row"}
+                              alignContent={"center"}
+                              alignItems={"center"}
                             >
-                              <Card
-                                style={{
-                                  width: "492px",
-                                  background: "#c6dff1",
-                                }}
+                              <Typography
+                                marginRight={"30px"}
+                                marginLeft={"70px"}
+                                color={"#9577be"}
+                                fontSize={"20px"}
+                                fontWeight={"bold"}
                               >
-                                <Grid
-                                  container
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Typography padding={"15px"}>
-                                    {position.position}
-                                  </Typography>
-                                  <Typography padding={"15px"}>
-                                    {position.studentCode}
-                                  </Typography>
-                                  <Typography padding={"15px"}>
-                                    {position.points} EXP
-                                  </Typography>
-                                </Grid>
-                              </Card>
-                            </Grid>
-                          </div>
+                                {position.position}
+                              </Typography>
+                      
+                              <img
+                                src={position.user.url_img ?? ""}
+                                alt="perfil"
+                                width={"50px"}
+                                height={"55px"}
+                                style={{
+                                  borderRadius: "100px",
+                                  marginRight: "30px",
+                                }}
+                              />
+                      
+                              {position.user.student_code === userData?.code ? (
+                                <Typography fontSize={"20px"} fontWeight={"bold"} 
+                                color={"#9577be"}>
+                                  {position.user.fullname}
+                                </Typography>
+                              ) : (
+                                <Typography fontSize={"20px"}>
+                                  {position.user.fullname}
+                                </Typography>
+                              )}
+                            </Box>
+                      
+                            {position.user.student_code === userData?.code ? (
+                                <Typography
+                                marginRight={"70px"}
+                                fontSize={"15px"}
+                                fontWeight={"bold"}
+                                
+                                color={"#9577be"}
+                              >
+                                {position.points} EXP
+                              </Typography>
+                              ) : (
+                                <Typography
+                              marginRight={"70px"}
+                              fontSize={"15px"}
+                              fontWeight={"bold"}
+                            >
+                              {position.points} EXP
+                            </Typography>
+                              )}
+                           
+                          </Grid>
+                        </Grid>
                         )
                       )}
                     </>
@@ -156,34 +199,114 @@ const TypographyPage = () => {
           <Grid item xs={12} lg={4}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Card style={{ padding: "40px" }}>
-                  <Typography variant="subtitle1" paddingBottom={"10px"}>
-                    SUPERATE MAS
-                  </Typography>
-                  <Box
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    paddingBottom={"35px"}
+                <Card
+                  style={{
+                    padding: "40px",
+                    width: "100%",
+                    maxWidth: "320px",
+                    backgroundColor: "#fff",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.5rem",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "end",
+                      padding: "0 10px 10px 0",
+                    }}
+                  >
+                    <div
+                      className="dropdown-menu"
+                      style={{
+                        position: "relative",
+                        zIndex: "10",
+                        display: "none",
+                        backgroundColor: "#fff",
+                        border: "1px solid #e5e7eb",
+                        borderRadius: "0.375rem",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      }}
+                    ></div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      paddingBottom: "2.5rem",
+                    }}
                   >
                     <img
-                      src="/images/profile/user-1.jpg"
+                      className="profile-image"
+                      src={userData?.urlImg ?? "/images/profile/user-1.jpg"}
                       alt="perfil"
-                      width={"90px"}
-                      style={{ borderRadius: "100px" }}
+                      style={{
+                        width: "6rem",
+                        height: "6rem",
+                        marginBottom: "0.75rem",
+                        borderRadius: "9999px",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      }}
                     />
-                  </Box>
-
-                  <Box>
-                    <Typography variant="h6">
-                      Puntos :{" "}
-                      {leagueData?.data?.userEstadistics?.currentPoints}
+                    <Typography
+                      variant="h5"
+                      style={{
+                        marginBottom: "0.25rem",
+                        fontSize: "1.25rem",
+                        fontWeight: "600",
+                        color: "#111827",
+                      }}
+                    >
+                      {userData?.fullname ?? "Nombre de usuario"}
                     </Typography>
-                    <Typography variant="h6">
-                      Puntos Faltantes:{" "}
-                      {leagueData?.data?.userEstadistics?.missingPoints}
+                    <Typography
+                      variant="body1"
+                      style={{ fontSize: "0.875rem", color: "#6b7280" }}
+                    >
+                      {userData?.type ?? "Tipo de usuario"}
                     </Typography>
-                  </Box>
+                    <div style={{ marginTop: "1rem", display: "flex" }}>
+                      <a
+                        className="add-friend-button"
+                        style={{
+                          display: "inline-block",
+                          padding: "0.5rem 1.25rem",
+                          fontSize: "0.875rem",
+                          fontWeight: "500",
+                          textAlign: "center",
+                          textDecoration: "none",
+                          borderRadius: "0.375rem",
+                          backgroundColor: "#3b82f6",
+                          color: "#fff",
+                        }}
+                      >
+                        Codigo :{" "}
+                        {/* {leagueData?.data?.userEstadistics?.currentPoints} */}
+                        {userData?.code ?? "codigo"}
+                      </a>
+                      {/* <a
+                        
+                        className="message-button"
+                        style={{
+                          display: "inline-block",
+                          marginLeft: "0.5rem",
+                          padding: "0.5rem 1.25rem",
+                          fontSize: "0.875rem",
+                          fontWeight: "500",
+                          textAlign: "center",
+                          textDecoration: "none",
+                          border: "1px solid #e5e7eb",
+                          borderRadius: "0.375rem",
+                          backgroundColor: "#fff",
+                          color: "#4b5563",
+                        }}
+                      >
+                        {leagueData?.data?.userEstadistics?.missingPoints}
+                      </a> */}
+                    </div>
+                  </div>
                 </Card>
               </Grid>
             </Grid>

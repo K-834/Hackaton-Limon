@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -12,36 +12,76 @@ import Link from "next/link";
 
 import CustomTextField from "@/app/(DashboardLayout)/components/forms/theme-elements/CustomTextField";
 
+
+
 interface loginType {
   title?: string;
   subtitle?: JSX.Element | JSX.Element[];
   subtext?: JSX.Element | JSX.Element[];
 }
 
-const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
-  <>
-    {title ? (
-      <Typography fontWeight="700" variant="h2" mb={1}>
-        {title}
-      </Typography>
-    ) : null}
+const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
+  const [username, setUsername] = useState("");
 
-    {subtext}
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
 
-    <Stack>
-      <Box>
-        <Typography
-          variant="subtitle1"
-          fontWeight={600}
-          component="label"
-          htmlFor="username"
-          mb="5px"
-        >
-          Código UTP
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(
+        "http://143.110.156.21:8080/api/users/find-user/" + username
+      );
+      if (!response.ok) {
+        throw new Error("No se pudo obtener los datos del usuario");
+      }
+      const data = await response.json();
+      if (!data || !data.data) {
+        throw new Error("Los datos del usuario no son válidos");
+      }
+      
+      localStorage.setItem("userData", JSON.stringify(data.data));
+      
+      if (data.data.isRegister) {
+        window.location.href = "/";
+      } else {
+        window.location.href = "/authentication/login/login_pregun";
+      }
+  
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+    }
+  };
+  
+  return (
+    <>
+      {title ? (
+        <Typography fontWeight="700" variant="h2" mb={1}>
+          {title}
         </Typography>
-        <CustomTextField variant="outlined" fullWidth />
-      </Box>
-      <Box mt="25px">
+      ) : null}
+
+      {subtext}
+
+      <Stack>
+        <Box>
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+            component="label"
+            htmlFor="username"
+            mb="5px"
+          >
+            Código UTP
+          </Typography>
+          <CustomTextField 
+            variant="outlined" 
+            fullWidth 
+            value={username} 
+            onChange={handleUsernameChange} 
+          />
+        </Box>
+        <Box mt="25px">
         <Typography
           variant="subtitle1"
           fontWeight={600}
@@ -53,47 +93,34 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
         </Typography>
         <CustomTextField type="password" variant="outlined" fullWidth />
       </Box>
-      <Stack
-        justifyContent="end"
-        direction="row"
-        alignItems="center"
-        my={3}
-      >
-        {/* <FormGroup>
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Remeber this Device"
-          />
-        </FormGroup> */}
-        <Typography
-          component={Link}
-          href="/"
-          fontWeight="500"
-          sx={{
-            textDecoration: "none",
-            color: "primary.main",
-          }}
-        >
-          Reestablecer contraseña?
-        </Typography>
+        <Stack justifyContent="end" direction="row" alignItems="center" my={3}>
+          <Typography
+            component={Link}
+            href="/"
+            fontWeight="500"
+            sx={{
+              textDecoration: "none",
+              color: "primary.main",
+            }}
+          >
+            Reestablecer contraseña?
+          </Typography>
+        </Stack>
       </Stack>
-    </Stack>
-    <Box>
-      <Button
-      style={{ backgroundColor: "#0661FC", color: "white" }}
-        // color="primary"
-        variant="contained"
-        size="large"
-        fullWidth
-        component={Link}
-        href="/authentication/login/login_pregun"
-        type="submit"
-      >
-        Iniciar Sesión
-      </Button>
-    </Box>
-    {subtitle}
-  </>
-);
+      <Box>
+        <Button
+          style={{ backgroundColor: "#0661FC", color: "white" }}
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={handleLogin}
+        >
+          Iniciar Sesión
+        </Button>
+      </Box>
+      {subtitle}
+    </>
+  );
+};
 
 export default AuthLogin;
