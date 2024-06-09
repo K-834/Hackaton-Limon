@@ -7,9 +7,10 @@ title: string;
 description: string;
 user: string;
 };
+deleteTask: (taskId: number) => void; 
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, deleteTask}) => {
 const dragStart = (event: React.DragEvent) => {
 event.dataTransfer.setData('task_id', task.id.toString());
 };
@@ -27,7 +28,7 @@ return (
 >
     <div className="task-header">
     <p>{task.title}</p>
-    <p>☒</p>
+    <button onClick={() => deleteTask(task.id)}>☒</button>
     </div>
     <div className="task-description-container">
     <p>{task.description}</p>
