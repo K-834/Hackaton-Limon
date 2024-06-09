@@ -6,6 +6,7 @@ interface Curso {
   modality: string;
   teacher: string;
   bg_image: string;
+  number_groups: number;
 }
 
 interface CursosTipo {
