@@ -173,15 +173,16 @@ const TypographyPage = () => {
                       style={{ borderRadius: "100px" }}
                     />
                   </Box>
-                  
+
                   <Box>
-                  <Typography variant="h6">
-                    Puntos : {leagueData.data.userEstadistics.currentPoints}
-                  </Typography>
-                  <Typography variant="h6">
-                    Puntos Faltantes:{" "}
-                    {leagueData.data.userEstadistics.missingPoints}
-                  </Typography>
+                    <Typography variant="h6">
+                      Puntos :{" "}
+                      {leagueData?.data?.userEstadistics?.currentPoints}
+                    </Typography>
+                    <Typography variant="h6">
+                      Puntos Faltantes:{" "}
+                      {leagueData?.data?.userEstadistics?.missingPoints}
+                    </Typography>
                   </Box>
                 </Card>
               </Grid>
