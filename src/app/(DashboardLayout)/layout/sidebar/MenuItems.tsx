@@ -11,10 +11,10 @@ import {
 import { uniqueId } from "lodash";
 
 const Menuitems = [
-  // {
-  //   navlabel: true,
-  //   subheader: "UTP",
-  // },
+//  {   
+//    navlabel: true,
+//    subheader: "Barra4",
+//  },
 
   {
     id: uniqueId(),
@@ -37,7 +37,7 @@ const Menuitems = [
     title: "Perfil",
     icon: IconCopy,
     href: "/utilities/shadow",
-  },
+  }
   // {
   //   navlabel: true,
   //   subheader: "Auth",
@@ -64,12 +64,12 @@ const Menuitems = [
   //   icon: IconMoodHappy,
   //   href: "/icons",
   // },
-  {
-    id: uniqueId(),
-    title: "Sample Page",
-    icon: IconAperture,
-    href: "/sample-page",
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: "Proyectos",
+  //   icon: IconAperture,
+  //   href: "/proyectos",
+  // }
 ];
 
 export default Menuitems;

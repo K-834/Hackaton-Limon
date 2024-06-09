@@ -9,6 +9,7 @@ import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/Pro
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
 import Cursos from '@/app/(DashboardLayout)/components/dashboard/Cursos';
+import { CourseProvider } from './components/dashboard/CourseProvider';
 
 const Dashboard = () => {
   return (
@@ -17,12 +18,13 @@ const Dashboard = () => {
         <Grid container spacing={3}>
           
           <Grid item xs={12} lg={12}>
+          <CourseProvider>
             <Cursos/>
+          </CourseProvider>
           </Grid>
 
 
-
-          <Grid item xs={12} lg={8}>
+          {/* <Grid item xs={12} lg={8}>
             <SalesOverview />
           </Grid>
 
@@ -47,8 +49,8 @@ const Dashboard = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Blog />
-          </Grid>
+            <Blog /> 
+          </Grid>*/}
 
         </Grid>
       </Box>
