@@ -10,18 +10,9 @@ const SamplePage = () => {
   return (
     <PageContainer
       title="Proyectos"
-      description="Donde van los proyectos realizados"
-    >
+      description="Donde van los proyectos realizados">
       <DashboardCard title="Proyectos">
-        <>
-
-        
-        <TableProyects />
-        <div>
-
-        </div>
-
-        </>        
+        <TableProyects />   
       </DashboardCard>
     </PageContainer>
   );
