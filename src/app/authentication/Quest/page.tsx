@@ -81,18 +81,80 @@ const questions = [
 const PlantillaPregunta = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [userAnswers, setUserAnswers] = useState<string[]>([]);
+  const [userAnswers, setUserAnswers] = useState<number[]>([]);
+  const currentQuestion = questions[currentQuestionIndex];
+  
+  const handleAnswerClick = (answer: string) => {
+    setSelectedAnswer(answer)
+  };
 
   const handleNextQuestion = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    setSelectedAnswer(null);
+    if (selectedAnswer != null) {
+      setUserAnswers((prevAnswers) => [...prevAnswers, currentQuestion.answers.indexOf(selectedAnswer)]);
+      if (currentQuestionIndex != questions.length - 1) {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setSelectedAnswer(null);
+      }
+    }
   };
 
-  const handleAnswerClick = (answer: string) => {
-    setSelectedAnswer(answer);
+  const handlePickClan = () => {
+    if (selectedAnswer != null) {
+      userAnswers.push(currentQuestion.answers.indexOf(selectedAnswer));
+      console.log(userAnswers)
+      const clan = numeroMasRepetido(userAnswers);
+
+      localStorage.setItem('ClanID', JSON.stringify(clan));
+
+      switch (clan) {
+        case 0:
+          console.log("Eres un Ingeniero");
+          break;
+        case 1:
+          console.log("Eres un Científico");
+          break;
+        case 2:
+          console.log("Eres un Artista");
+          break;
+        case 3:
+          console.log("Eres un Atleta");
+          break;
+        case 4:
+          console.log("Eres un Humanista");
+          break;
+        default:
+          console.log("Eres un UTEPIN");
+          break;
+      }
+
+    }
   };
 
-  const currentQuestion = questions[currentQuestionIndex];
+  const numeroMasRepetido = (array : number[]) => {
+    if(array.length === 0)
+      return null;
+    
+    var contador: { [key: number]: number } = {};
+    var valorMasRepetido = array[0], maxCount = 1;
+  
+    for(var i = 0; i < array.length; i++)
+    {
+      var valor = array[i];
+      if(contador[valor] == null)
+        contador[valor] = 1;
+      else
+        contador[valor]++;  
+  
+      if(contador[valor] > maxCount)
+      {
+        valorMasRepetido = valor;
+        maxCount = contador[valor];
+      }
+    }
+  
+    return valorMasRepetido;
+  };
+
 
   return (
     <PageContainer title="UTEPIN" description="pagina de UTEPIN">
@@ -245,8 +307,9 @@ const PlantillaPregunta = () => {
                         textDecoration: "none",
                       }}
                       variant="contained"
+                      onClick={handlePickClan}
                     >
-                      Continuar
+                      Finalizar
                     </Button>
                   </Link>
                 )}

@@ -7,13 +7,17 @@ const Cursos: React.FC = () => {
 
   let storedUserData = null;
   let userData = null;
-  let studentCode = "U00000001";
+  let studentCode = null;
 
   if (typeof window !== "undefined" && "localStorage" in window) {
     storedUserData = localStorage.getItem("userData");
+    if (storedUserData !== null) {
     userData = storedUserData ? JSON.parse(storedUserData) : null;
-    studentCode = userData.code || "U00000001";
+    studentCode = userData.code;
+    }
   }
+
+
 
   const handleClick = (
     section_code: string,
@@ -21,7 +25,7 @@ const Cursos: React.FC = () => {
     number_groups: number
   ) => {
     const nameCourse = name_course;
-    const newUrl = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}`;
+    // const newUrl = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}`;
     const urlGrupos = `/grupos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}&numberGroups=${number_groups}`;
     window.location.href = urlGrupos;
   };

@@ -88,7 +88,7 @@ const Proyectos: React.FC = () => {
         );
         setMember(leader ? leader : null);
 
-        console.log("Data:", data);
+        // console.log("Data:", data);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -103,7 +103,7 @@ const Proyectos: React.FC = () => {
     if (!grupo) return "No se encontró líder";
     const leader = grupo.members.find((member) => member.leadMember);
     localStorage.setItem("miembros", JSON.stringify(grupo.members));
-    console.log("miembros:", grupo.members);
+    // console.log("miembros:", grupo.members);
     return leader ? leader.fullname : "No se encontró líder";
   };
 
@@ -185,12 +185,17 @@ const Proyectos: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Líder
+                    Nota
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
-                    Acción
+                  % Avance
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={600}>
+                  Acción
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -227,7 +232,16 @@ const Proyectos: React.FC = () => {
                       variant="subtitle2"
                       fontWeight={400}
                     >
-                      {miembroLider() || ""}
+                      {"-" || ""}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                      fontWeight={400}
+                    >
+                      {"0%" || ""}
                     </Typography>
                   </TableCell>
                   <TableCell>
