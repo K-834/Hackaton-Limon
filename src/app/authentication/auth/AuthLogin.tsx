@@ -13,7 +13,6 @@ import Link from "next/link";
 import CustomTextField from "@/app/(DashboardLayout)/components/forms/theme-elements/CustomTextField";
 
 
-
 interface loginType {
   title?: string;
   subtitle?: JSX.Element | JSX.Element[];
@@ -40,17 +39,32 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         throw new Error("Los datos del usuario no son válidos");
       }
       
-      localStorage.setItem("userData", JSON.stringify(data.data));
+      if (typeof window !== 'undefined') {
+        if ('localStorage' in window) {
+          localStorage.setItem("userData", JSON.stringify(data.data));
+          
+          const userData = localStorage.getItem("userData");
+          
+          if (userData) {
+            // El usuario está en el almacenamiento local
+            console.log("El usuario está en el almacenamiento local");
+          } else {
+            // El usuario no está en el almacenamiento local
+            console.log("El usuario no está en el almacenamiento local");
+          }
+        }
+      }
       
       if (data.data.isRegister) {
-        window.location.href = "/";
+        (window as any).location.href = "/";
       } else {
-        window.location.href = "/authentication/login/login_pregun";
+        (window as any).location.href = "/authentication/login/login_pregun";
       }
   
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
     }
+    
   };
   
   return (
@@ -74,6 +88,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           >
             Código UTP
           </Typography>
+
           <CustomTextField 
             variant="outlined" 
             fullWidth 
