@@ -23,6 +23,12 @@ const CourseContext = createContext<CursosTipo | undefined>(undefined);
 export const CourseProvider: React.FC<CursosProps> = ({ children }) => {
   const [courses, setCourses] = useState<Curso[]>([]);
 
+  if (typeof window !== "undefined" && "localStorage" in window) {
+  const storedUserData = localStorage.getItem("userData");
+  if (storedUserData === null) {
+    window.location.href = "/authentication/login";
+  }}
+
   const fetchCursos = async () => {
     if (courses.length === 0) { 
       try {

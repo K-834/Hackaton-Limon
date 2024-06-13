@@ -1,21 +1,19 @@
 "use client";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 import { Grid, Box, Card, Typography, Button } from "@mui/material";
 // components
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 
 const questions = [
   {
-    question: "¿Cuáles son tus hobbies e intereses?",
+    question: "Si pudieras tener un superpoder, ¿cuál elegirías?",
     answers: [
-      "Bailar",
-      "Deportes",
-      "Tecnología",
-      "Videojuegos",
-      "Música",
-      "Lectura",
+      "a) Crear inventos asombrosos de la nada.",
+      "b) Absorber conocimientos con solo tocar un libro.",
+      "c) Convertir tus ideas en obras de arte instantáneamente.",
+      "d) Tener la fuerza y resistencia de un superhéroe.",
+      "e) Poder hablar y entender todos los idiomas del mundo.",
     ],
   },
   {
@@ -80,123 +78,83 @@ const questions = [
   },
 ];
 
-const getClanId = (answers: string[]) => {
-  const answerCounts: { [key: string]: number } = {
-    "a": 0,
-    "b": 0,
-    "c": 0,
-    "d": 0,
-    "e": 0,
-  };
-
-  answers.forEach((answer) => {
-    const key = answer.charAt(0); 
-    if (key in answerCounts) {
-      answerCounts[key as keyof typeof answerCounts]++;
-    }
-  });
-
-  let maxKey = 'a';
-  for (const key in answerCounts) {
-    if (answerCounts[key as keyof typeof answerCounts] > answerCounts[maxKey]) {
-      maxKey = key;
-    }
-  }
-
-  return parseInt(maxKey, 36) - 10 + 1; 
-};
-
-
 const PlantillaPregunta = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [leagueData, setLeagueData] = useState<any>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
-  const [userData, setUserData] = useState<any>(null);
-  const [firstQuestionAnswers, setFirstQuestionAnswers] = useState<string[]>(
-    []
-  );
-  const [otherQuestionAnswers, setOtherQuestionAnswers] = useState<string[]>(
-    []
-  );
-  useEffect(() => {
-    const url =
-      "http://143.110.156.21:8080/api/projects/league-position/U00000001";
-
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setLeagueData(data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
-    }
-  }, []);
-
-
-
-  const handleNextQuestion = async () => {
-    if (currentQuestionIndex === 0) {
-      setFirstQuestionAnswers(selectedAnswers);
-    } else {
-      setOtherQuestionAnswers((prevAnswers) => [
-        ...prevAnswers,
-        selectedAnswers[0],
-      ]);
-    }
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setSelectedAnswers([]);
-    } else {
-      console.log("Respuestas a la primera pregunta:", firstQuestionAnswers);
-      console.log("Respuestas a las demás preguntas:", otherQuestionAnswers);
-      const clanId = getClanId(otherQuestionAnswers);
-      console.log("El ID del clan es:", clanId)
-  
-      // Aquí es donde enviamos la solicitud POST a la API
-      const response = await fetch('http://143.110.156.21:8080/api/users/profile/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          studentCode:`${userData?.code ?? 'U00000001'}`,
-          hobbies:["Programación"], 
-          clanId:clanId
-        })
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error al crear el perfil del usuario');
-      }
-  
-      const data = await response.json();
-      console.log('Perfil del usuario creado con éxito:', data);
-      
-      
-  
-      window.location.href = "/";
-    }
-  };
-
-  const handleAnswerClick = (answer: string) => {
-    if (currentQuestionIndex === 0) {
-      setSelectedAnswers((prevAnswers) => [...prevAnswers, answer]);
-    } else {
-      setSelectedAnswers([answer]);
-    }
-  };
-
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [userAnswers, setUserAnswers] = useState<number[]>([]);
   const currentQuestion = questions[currentQuestionIndex];
+  
+  const handleAnswerClick = (answer: string) => {
+    setSelectedAnswer(answer)
+  };
+
+  const handleNextQuestion = () => {
+    if (selectedAnswer != null) {
+      setUserAnswers((prevAnswers) => [...prevAnswers, currentQuestion.answers.indexOf(selectedAnswer)]);
+      if (currentQuestionIndex != questions.length - 1) {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setSelectedAnswer(null);
+      }
+    }
+  };
+
+  const handlePickClan = () => {
+    if (selectedAnswer != null) {
+      userAnswers.push(currentQuestion.answers.indexOf(selectedAnswer));
+      console.log(userAnswers)
+      const clan = numeroMasRepetido(userAnswers);
+
+      localStorage.setItem('ClanID', JSON.stringify(clan));
+
+      switch (clan) {
+        case 0:
+          console.log("Eres un Ingeniero");
+          break;
+        case 1:
+          console.log("Eres un Científico");
+          break;
+        case 2:
+          console.log("Eres un Artista");
+          break;
+        case 3:
+          console.log("Eres un Atleta");
+          break;
+        case 4:
+          console.log("Eres un Humanista");
+          break;
+        default:
+          console.log("Eres un UTEPIN");
+          break;
+      }
+
+    }
+  };
+
+  const numeroMasRepetido = (array : number[]) => {
+    if(array.length === 0)
+      return null;
+    
+    var contador: { [key: number]: number } = {};
+    var valorMasRepetido = array[0], maxCount = 1;
+  
+    for(var i = 0; i < array.length; i++)
+    {
+      var valor = array[i];
+      if(contador[valor] == null)
+        contador[valor] = 1;
+      else
+        contador[valor]++;  
+  
+      if(contador[valor] > maxCount)
+      {
+        valorMasRepetido = valor;
+        maxCount = contador[valor];
+      }
+    }
+  
+    return valorMasRepetido;
+  };
+
 
   return (
     <PageContainer title="UTEPIN" description="pagina de UTEPIN">
@@ -244,7 +202,6 @@ const PlantillaPregunta = () => {
               width="100%"
               textAlign="center"
             >
-              
               <img
                 src="/images/logos/utepin.png"
                 alt="ImagenUTP"
@@ -293,10 +250,8 @@ const PlantillaPregunta = () => {
                     margin: "5px",
                     width: "100%",
                     borderRadius: "5px",
-                    backgroundColor: selectedAnswers.includes(answer)
-                      ? "#d3d3d3"
-                      : "white",
-
+                    backgroundColor:
+                      selectedAnswer === answer ? "#d3d3d3" : "white",
                     color: "black",
                     fontSize: "20px",
                     padding: "5px",
@@ -335,26 +290,28 @@ const PlantillaPregunta = () => {
                     }}
                     variant="contained"
                     onClick={handleNextQuestion}
-                    disabled={selectedAnswers.length === 0}
+                    disabled={selectedAnswer === null}
                   >
                     Continuar
                   </Button>
                 ) : (
-                  <Button
-                    style={{
-                      backgroundColor: "#5138f2",
-                      color: "white",
-                      fontSize: "46px",
-                      borderRadius: "20px",
-                      padding: "10px 60px",
-                      margin: "0 10",
-                      textDecoration: "none",
-                    }}
-                    variant="contained"
-                    onClick={handleNextQuestion}
-                  >
-                    Continuar
-                  </Button>
+                  <Link href="/" passHref>
+                    <Button
+                      style={{
+                        backgroundColor: "#5138f2",
+                        color: "white",
+                        fontSize: "46px",
+                        borderRadius: "20px",
+                        padding: "10px 60px",
+                        margin: "0 10",
+                        textDecoration: "none",
+                      }}
+                      variant="contained"
+                      onClick={handlePickClan}
+                    >
+                      Finalizar
+                    </Button>
+                  </Link>
                 )}
               </Box>
             </Box>

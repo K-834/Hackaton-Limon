@@ -41,7 +41,7 @@ const Login2 = () => {
             <AuthLogin
               subtext={
                 <Typography variant="subtitle2" fontWeight={600} fontSize={24} textAlign="center" color="textSecondary" mb={3}>
-                 La nueva experiencia digital para realizar proyectos
+                La nueva experiencia digital para realizar proyectos
                 </Typography>
               }
               
