@@ -88,7 +88,7 @@ const Login3 = () => {
 
           <Typography fontSize={50} paddingTop={2} variant="subtitle1">
             Hola{" "}
-            <span style={{ color: "#000", fontWeight: "bold" }}>$Miguel</span>
+            
           </Typography>
           <Typography fontSize={32} paddingTop={2} variant="subtitle1">
             ¿Todavía no tienes un perfil?

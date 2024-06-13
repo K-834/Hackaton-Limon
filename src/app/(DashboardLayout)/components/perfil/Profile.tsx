@@ -6,11 +6,15 @@ interface Perfil {
     student_code: string;
 }
 
+const storedUserData = localStorage.getItem("userData");
+const userData = storedUserData ? JSON.parse(storedUserData) : null;
+const studentCode = userData.code;
+
 export const Profile = () => {
     const [perfil, setPerfil] = useState<Perfil | null>(null);
     
     useEffect(() => {
-        fetch('http://143.110.156.21:3000/users?student_code=U00000001')
+        fetch('http://143.110.156.21:3000/users?student_code='+studentCode)
             .then(response => response.json())
             .then(data => {
                 setPerfil(data[0]); // selecciona el primer elemento del array
