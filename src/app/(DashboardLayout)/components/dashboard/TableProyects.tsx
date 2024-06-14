@@ -101,13 +101,17 @@ const Proyectos: React.FC = () => {
     }
   }, [studentCode, sectionId]);
 
-  const miembroLider = () => {
-    if (!grupo) return "No se encontró líder";
-    const leader = grupo.members.find((member) => member.leadMember);
-    localStorage.setItem("miembros", JSON.stringify(grupo.members));
-    // console.log("miembros:", grupo.members);
-    return leader ? leader.fullname : "No se encontró líder";
-  };
+  
+  if (!grupo) return "No se encontró líder";
+  localStorage.setItem("miembros", JSON.stringify(grupo.members));
+  console.log("miembros:", grupo.members);
+  // const miembroLider = () => {
+  //   if (!grupo) return "No se encontró líder";
+  //   const leader = grupo.members.find((member) => member.leadMember);
+  //   localStorage.setItem("miembros", JSON.stringify(grupo.members));
+  //   // console.log("miembros:", grupo.members);
+  //   return leader ? leader.fullname : "No se encontró líder";
+  // };
 
   const handleAddProject = () => {
     setIsModalOpen((prev) => !prev);
@@ -288,6 +292,8 @@ const Proyectos: React.FC = () => {
                       id="evaluation"
                       onChange={(e) => setFormEvaluation(e.target.value)}
                     >
+                      <option value="TA3">Tarea Academica 2</option>
+                      <option value="TA2">Tarea Academica 2</option>
                       <option value="TA1">Tarea Academica 1</option>
                       <option value="TF">Trabajo Final</option>
                     </select>
