@@ -63,11 +63,11 @@ export const Profile = () => {
               }}
             >
               {perfil?.fullname}{" "}
-              <h1 style={{ fontSize: "1rem", fontWeight: "400" }}>
+              
+            </h2>
+            <h1 style={{ fontSize: "1rem", fontWeight: "400" }}>
                 Ingeniería de Software
               </h1>
-            </h2>
-
             {/* <p>{perfil?.student_code} </p> */}
           </div>
         </div>
