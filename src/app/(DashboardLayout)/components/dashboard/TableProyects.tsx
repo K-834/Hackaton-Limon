@@ -47,9 +47,11 @@ const Proyectos: React.FC = () => {
   const [nameCurso, setNameCurso] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formNameProject, setFormNameProject] = useState("");
-  const [formEvaluation, setFormEvaluation] = useState("");
+  // const [formEvaluation, setFormEvaluation] = useState("");
   const [formType, setFormType] = useState("");
   const [isAddingProject, setIsAddingProject] = useState(false);
+  const [formEvaluation, setFormEvaluation] = useState("TA1");
+
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
