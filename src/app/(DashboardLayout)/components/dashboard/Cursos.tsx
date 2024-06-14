@@ -25,7 +25,7 @@ const Cursos: React.FC = () => {
     number_groups: number,
     isRegister : boolean
   ) => {
-    if(isRegister){
+    if(!isRegister){
     const nameCourse = name_course;
     const urlGrupos = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}&numberGroups=${number_groups}`;
     window.location.href = urlGrupos;
