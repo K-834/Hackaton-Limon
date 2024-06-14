@@ -8,6 +8,19 @@ interface Curso {
   bg_image: string;
   number_groups: number;
 }
+interface Estudiante {
+  id: number;
+  studentCode: string;
+  hobbies: {
+    id: number;
+    hobbies: string[];
+  };
+  points: number;
+  clan: {
+    id: number;
+    description: string;
+  };
+}
 
 interface CursosTipo {
   courses: Curso[];
@@ -22,9 +35,11 @@ const CourseContext = createContext<CursosTipo | undefined>(undefined);
 
 export const CourseProvider: React.FC<CursosProps> = ({ children }) => {
   const [courses, setCourses] = useState<Curso[]>([]);
-
+  const [user, setUser] = useState<Estudiante[]>([]);
+  
   if (typeof window !== "undefined" && "localStorage" in window) {
   const storedUserData = localStorage.getItem("userData");
+
   if (storedUserData === null) {
     window.location.href = "/authentication/login";
   }}
@@ -45,8 +60,34 @@ export const CourseProvider: React.FC<CursosProps> = ({ children }) => {
     }
   };
 
+
+  const fetchUsuario = async () => {
+    if (courses.length === 0) { 
+      try {
+        if (typeof window !== "undefined" && "localStorage" in window) {
+          const storedUserData = localStorage.getItem("userData");
+          const UserCode = storedUserData ? JSON.parse(storedUserData).code : null;
+
+          if (storedUserData != null) {
+            const response = await fetch('http://143.110.156.21:8080/api/users/profile/'+ UserCode);
+            const user = await response.json();
+            setUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+          if (!response.ok) {
+            throw new Error(' sin conexion');
+          }
+          }}
+
+        } catch (error) {
+          console.error('Error:', error);
+    }
+      
+    }
+  };
+
   useEffect(() => {
     fetchCursos();
+    fetchUsuario();
   }, []);
 
   return (
