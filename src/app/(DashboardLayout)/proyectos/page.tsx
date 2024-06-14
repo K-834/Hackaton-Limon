@@ -8,9 +8,9 @@ import TeacherMsgProyects from "../components/dashboard/TeacherMsgProyects";
 
 const mensajes = [
 {
-    colorBg: 'rgb(0, 127, 56)', // Verde
+    colorBg: 'rgb(0, 0, 230)', // Verde
     tipo: 'Comentario',
-    fecha: 'Hoy',
+    fecha: 'Tarea Academica 2',
     msg: 'Su trabajo esta excelente, sigan así. '
   },
   {
@@ -25,9 +25,9 @@ const mensajes = [
     msg: 'Buenas estudiantes, recuerden que el proyecto final debe ser entregado el día 30 de noviembre.'
   },
   {
-    colorBg: 'rgb(0, 0, 230)', // Azul
-    tipo: 'Feedback',
-    fecha: 'Ayer',
+    colorBg: 'rgb(0, 0, 230)', //'rgb(0, 0, 230)', // Azul
+    tipo: 'Comentario',
+    fecha: 'Tarea Academica 1',
     msg: 'Mejorar la presentación y la redacción.'
   }
 ];

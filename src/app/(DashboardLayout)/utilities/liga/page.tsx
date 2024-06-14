@@ -159,7 +159,7 @@ const TypographyPage = () => {
                                 transition: "0.3s"
                               }}
                             >
-                              HAZ UNA LECCIÓN
+                              EMPEZAR
                             </Button>
                           </div>
                         )}
