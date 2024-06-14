@@ -114,7 +114,6 @@ const SamplePage = () => {
 
           </div>
         </div>
-         
       </DashboardCard>
     </PageContainer>
   );

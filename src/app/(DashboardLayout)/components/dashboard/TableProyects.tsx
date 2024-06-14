@@ -117,7 +117,7 @@ const Proyectos: React.FC = () => {
 
     const requestBody = {
       name: formNameProject,
-      evaluation: formEvaluation,
+      evaluationId: formEvaluation,
       typeId: formType,
       groupId: "CS1011",
     };
@@ -144,6 +144,7 @@ const Proyectos: React.FC = () => {
     }
 
     setIsAddingProject(false);
+    window.location.reload()
   };
 
   return (
@@ -178,21 +179,21 @@ const Proyectos: React.FC = () => {
                     Evaluación
                   </Typography>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
                     Tipo
                   </Typography>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
                     Nota
                   </Typography>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
                   % Avance
                   </Typography>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight={600}>
                   Acción
@@ -213,11 +214,12 @@ const Proyectos: React.FC = () => {
                         variant="subtitle2"
                         fontWeight={400}
                       >
-                        {project.evaluation.description}
+                        {project.evaluation ? project.evaluation.description : "No definido"}
+                        
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Typography
                       color="textSecondary"
                       variant="subtitle2"
@@ -225,7 +227,7 @@ const Proyectos: React.FC = () => {
                     >
                       {project.type ? project.type.description : "No definido"}
                     </Typography>
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Typography
                       color="textSecondary"
@@ -235,7 +237,7 @@ const Proyectos: React.FC = () => {
                       {"-" || ""}
                     </Typography>
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Typography
                       color="textSecondary"
                       variant="subtitle2"
@@ -243,7 +245,7 @@ const Proyectos: React.FC = () => {
                     >
                       {"0%" || ""}
                     </Typography>
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Button
                       variant="contained"
