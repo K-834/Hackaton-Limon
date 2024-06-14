@@ -66,8 +66,7 @@ const Shadow = () => {
               margin: "0 auto",
             }}
           >
-            <div
-             
+            <div 
             >
               <Header />
               <Profile />
@@ -162,7 +161,7 @@ const Shadow = () => {
                   borderRadius: "0.5rem",
                 }}
               >
-               
+              
               </div>
             </div> */}
 
