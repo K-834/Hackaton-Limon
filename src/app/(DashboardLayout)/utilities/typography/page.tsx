@@ -1,6 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Typography, Grid, Card, Box, CardMedia } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Card,
+  Box,
+  CardMedia,
+  FormGroup,
+  FormControlLabel,
+  Button,
+  Stack,
+  Checkbox,
+} from "@mui/material";
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
 import BlankCard from "@/app/(DashboardLayout)/components/shared/BlankCard";
@@ -75,6 +86,14 @@ const TypographyPage = () => {
     }
   }, []);
 
+  const [showList, setShowList] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true); // Estado para controlar la visibilidad del botón
+
+  const handleShowList = () => {
+    setShowList(true); // Mostrar la lista
+    setButtonVisible(false); // Ocultar el botón
+  };
+
   return (
     <PageContainer title="Liga" description="this is Typography">
       <Box>
@@ -107,83 +126,128 @@ const TypographyPage = () => {
                         >
                           {leagueData.data.userEstadistics.league.description}{" "}
                         </Typography>
-                      </Box>
 
-                      {leagueData.data.positions.map(
-                        (position: Position, index: number) => (
-                          <Grid item xs={12} key={position.user.student_code}>
-                          <Grid
-                            container
-                            justifyContent="space-between"
-                            alignItems="center"
-                            marginTop={"15px"}
+                        {buttonVisible && (
+                          <div
                             style={{
-                              backgroundColor: position.user.student_code === userData?.code ? '#f0f0f0' : '#ffffff',
+                              display: "flex",
+                              flexDirection: "column",
                             }}
                           >
-                            <Box
-                              display={"flex"}
-                              flexDirection={"row"}
-                              alignContent={"center"}
+                            <Typography
+                              fontSize={"20px"}
                               alignItems={"center"}
+                              marginBottom={"10px"}
                             >
-                              <Typography
-                                marginRight={"30px"}
-                                marginLeft={"70px"}
-                                color={"#9577be"}
-                                fontSize={"20px"}
-                                fontWeight={"bold"}
-                              >
-                                {position.position}
-                              </Typography>
-                      
-                              <img
-                                src={position.user.url_img ?? ""}
-                                alt="perfil"
-                                width={"50px"}
-                                height={"55px"}
-                                style={{
-                                  borderRadius: "100px",
-                                  marginRight: "30px",
-                                }}
-                              />
-                      
-                              {position.user.student_code === userData?.code ? (
-                                <Typography fontSize={"20px"} fontWeight={"bold"} 
-                                color={"#9577be"}>
-                                  {position.user.fullname}
-                                </Typography>
-                              ) : (
-                                <Typography fontSize={"20px"}>
-                                  {position.user.fullname}
-                                </Typography>
-                              )}
-                            </Box>
-                      
-                            {position.user.student_code === userData?.code ? (
-                                <Typography
-                                marginRight={"70px"}
-                                fontSize={"15px"}
-                                fontWeight={"bold"}
-                                
-                                color={"#9577be"}
-                              >
-                                {position.points} EXP
-                              </Typography>
-                              ) : (
-                                <Typography
-                              marginRight={"70px"}
-                              fontSize={"15px"}
-                              fontWeight={"bold"}
-                            >
-                              {position.points} EXP
+                              Quieres participar en la liga de este periodo?
                             </Typography>
-                              )}
-                           
-                          </Grid>
-                        </Grid>
-                        )
-                      )}
+
+                            <Button
+                              onClick={handleShowList}
+                              style={{
+                                fontSize: "15px",
+                                fontWeight: "bold",
+                                color: "#1CB0F6",
+                                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)", 
+                                marginTop: "20px",
+                                height: "48px",
+                                width: "256px",
+                                display: "block", 
+                                margin: "auto", 
+                                padding: "10px 20px",
+                                borderRadius: "10px",
+                                transition: "0.3s"
+                              }}
+                            >
+                              HAZ UNA LECCIÓN
+                            </Button>
+                          </div>
+                        )}
+
+                        {showList &&
+                          leagueData.data.positions.map(
+                            (position: Position, index: number) => (
+                              <Grid
+                                container
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                marginTop={"15px"}
+                                style={{
+                                  backgroundColor:
+                                    position.user.student_code ===
+                                    userData?.code
+                                      ? "#f0f0f0"
+                                      : "#ffffff",
+                                }}
+                              >
+                                <Box
+                                  display={"flex"}
+                                  flexDirection={"row"}
+                                  alignContent={"center"}
+                                  alignItems={"center"}
+                                >
+                                  <Typography
+                                    marginRight={"30px"}
+                                    marginLeft={"40px"}
+                                    color={"#9577be"}
+                                    fontSize={"20px"}
+                                    fontWeight={"bold"}
+                                  >
+                                    {position.position}
+                                  </Typography>
+                                  <img
+                                    src={position.user.url_img ?? ""}
+                                    alt="perfil"
+                                    width={"50px"}
+                                    height={"55px"}
+                                    style={{
+                                      borderRadius: "100px",
+                                      marginRight: "30px",
+                                    }}
+                                  />
+
+                                  {position.user.student_code ===
+                                  userData?.code ? (
+                                    <Typography
+                                      fontSize={"20px"}
+                                      fontWeight={"bold"}
+                                      color={"#9577be"}
+                                    >
+                                      {position.user.fullname}
+                                    </Typography>
+                                  ) : (
+                                    <Typography fontSize={"20px"}>
+                                      {position.user.fullname}
+                                    </Typography>
+                                  )}
+                                </Box>
+
+                                {position.user.student_code ===
+                                userData?.code ? (
+                                  <Typography
+                                    marginRight={"70px"}
+                                    marginLeft={"90px"}
+                                    fontSize={"15px"}
+                                    fontWeight={"bold"}
+                                    color={"#9577be"}
+                                  >
+                                    {position.points} EXP
+                                  </Typography>
+                                ) : (
+                                  <Typography
+                                    marginRight={"70px"}
+                                    marginLeft={"90px"}
+                                    fontSize={"15px"}
+                                    fontWeight={"bold"}
+                                  >
+                                    {position.points} EXP
+                                  </Typography>
+                                )}
+                              </Grid>
+                            )
+                          )}
+                      </Box>
                     </>
                   )}
                   {error && (

@@ -10,7 +10,7 @@ const MonthlyEarnings = () => {
   // chart color
   const theme = useTheme();
   const secondary = theme.palette.secondary.main;
-  const secondarylight = '#f5fcff';
+  const secondarylight = '#9577be';
   const errorlight = '#fdede8';
 
   // chart
@@ -18,7 +18,7 @@ const MonthlyEarnings = () => {
     chart: {
       type: 'area',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: '#adb0bb',
+      foreColor: '#9577be',
       toolbar: {
         show: false,
       },
@@ -43,29 +43,29 @@ const MonthlyEarnings = () => {
     tooltip: {
       theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
     },
+    xaxis: {
+      categories: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+    },
   };
   const seriescolumnchart: any = [
     {
       name: '',
       color: secondary,
-      data: [25, 66, 20, 40, 12, 58, 20],
+      data: [10, 5, 15, 8, 7, 6, 9],
     },
   ];
 
   return (
     <DashboardCard
-      title="Monthly Earnings"
-      action={
-        <Fab color="secondary" size="medium" sx={{color: '#ffffff'}}>
-          <IconCurrencyDollar width={24} />
-        </Fab>
-      }
+      title="EXP de esta semana" 
+      
       footer={
-        <Chart options={optionscolumnchart} series={seriescolumnchart} type="area" height={60} width={"100%"} />
+
+        <Chart options={optionscolumnchart} series={seriescolumnchart} type="area" height={210} width={"100%"} />
       }
     >
       <>
-        <Typography variant="h3" fontWeight="700" mt="-20px">
+        {/* <Typography variant="h3" fontWeight="700" mt="-20px">
           $6,820
         </Typography>
         <Stack direction="row" spacing={1} my={1} alignItems="center">
@@ -78,7 +78,7 @@ const MonthlyEarnings = () => {
           <Typography variant="subtitle2" color="textSecondary">
             last year
           </Typography>
-        </Stack>
+        </Stack> */}
       </>
     </DashboardCard>
   );
