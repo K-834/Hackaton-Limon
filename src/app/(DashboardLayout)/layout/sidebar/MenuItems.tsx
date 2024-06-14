@@ -30,7 +30,7 @@ const Menuitems = [
     id: uniqueId(),
     title: "Liga",
     icon: IconCopy,
-    href: "/utilities/typography",
+    href: "/utilities/liga",
   },
   {
     id: uniqueId(),

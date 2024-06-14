@@ -85,10 +85,6 @@ const SamplePage = () => {
     window.location.href = newUrl;
   }
 
-  /* console.log(students) */
-
-  /* console.log(students) */
-
   return (
     <PageContainer
       title="Proyectos"

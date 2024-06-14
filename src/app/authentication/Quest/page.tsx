@@ -169,7 +169,7 @@ const PlantillaPregunta = () => {
 
       <Grid
         container
-        spacing={0}
+        spacing={3}
         justifyContent="center"
         sx={{ height: "100vh" }}
       >

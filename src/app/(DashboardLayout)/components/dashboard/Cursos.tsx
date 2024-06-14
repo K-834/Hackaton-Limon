@@ -22,12 +22,20 @@ const Cursos: React.FC = () => {
   const handleClick = (
     section_code: string,
     name_course: string,
-    number_groups: number
+    number_groups: number,
+    isRegister : boolean
   ) => {
+    if( isRegister){
     const nameCourse = name_course;
     // const newUrl = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}`;
     const urlGrupos = `/grupos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}&numberGroups=${number_groups}`;
     window.location.href = urlGrupos;
+
+    }else{
+    const nameCourse = name_course;
+    const urlGrupos = `/proyectos?studentCode=${studentCode}&sectionId=${section_code}&nameCourse=${nameCourse}&numberGroups=${number_groups}`;
+    window.location.href = urlGrupos;
+    }
   };
 
   return (
@@ -41,7 +49,8 @@ const Cursos: React.FC = () => {
               handleClick(
                 course.section_code,
                 course.name_course,
-                course.number_groups
+                course.number_groups,
+                userData.isRegister
               )
             }
           >
