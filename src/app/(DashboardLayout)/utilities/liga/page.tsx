@@ -87,7 +87,20 @@ const TypographyPage = () => {
   }, []);
 
   const [showList, setShowList] = useState(false);
-  const [buttonVisible, setButtonVisible] = useState(true); // Estado para controlar la visibilidad del botón
+  const [buttonVisible, setButtonVisible] = useState(true);
+
+  useEffect(() => {
+    if (userData?.isRegister) {
+      setShowList(true);
+      setButtonVisible(false);
+    } else {
+      setShowList(false);
+      setButtonVisible(true);
+    }
+  }, [userData]);
+
+  console.log("isRegister:", showList);
+  console.log("buttonVisible:", buttonVisible);
 
   const handleShowList = () => {
     setShowList(true); // Mostrar la lista
@@ -95,7 +108,7 @@ const TypographyPage = () => {
   };
 
   return (
-    <PageContainer title="Liga" description="this is Typography">
+    <PageContainer title="Liga" description="Esto es la liga">
       <Box>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={8}>
@@ -119,6 +132,7 @@ const TypographyPage = () => {
                           alt="Liga"
                           style={{ width: "90px" }}
                         />
+                        {leagueData.data.isRegister}
                         <Typography
                           variant="h2"
                           textAlign={"center"}
@@ -148,15 +162,15 @@ const TypographyPage = () => {
                                 fontSize: "15px",
                                 fontWeight: "bold",
                                 color: "#1CB0F6",
-                                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)", 
+                                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
                                 marginTop: "20px",
                                 height: "48px",
                                 width: "256px",
-                                display: "block", 
-                                margin: "auto", 
+                                display: "block",
+                                margin: "auto",
                                 padding: "10px 20px",
                                 borderRadius: "10px",
-                                transition: "0.3s"
+                                transition: "0.3s",
                               }}
                             >
                               HAZ UNA LECCIÓN
@@ -173,6 +187,7 @@ const TypographyPage = () => {
                                 justifyContent="space-between"
                                 alignItems="center"
                                 marginTop={"15px"}
+                                key={index}
                                 style={{
                                   backgroundColor:
                                     position.user.student_code ===
@@ -330,6 +345,7 @@ const TypographyPage = () => {
                       style={{ fontSize: "0.875rem", color: "#6b7280" }}
                     >
                       {userData?.type ?? "Tipo de usuario"}
+                      {/* {userData?.isRegister ? "true" : "false"} */}
                     </Typography>
                     <div style={{ marginTop: "1rem", display: "flex" }}>
                       <a
