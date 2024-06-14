@@ -54,56 +54,22 @@ const SamplePage = () => {
   }, [students]);
 
   const listGroups = (
-    <div
-      className="container"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "1rem",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "1rem",
-          width: "100%",
-          justifyContent: "center",
-        }}
-      >
-        {Array.from({ length: numberGroups }, (_, i) => (
-          <div
-            key={i}
-            onClick={() => setCurrentGroup(i + 1)}
-            style={{
-              width: "calc(33.3333% - 1rem)",
-              minWidth: "160px",
-              height: "82px",
-              cursor: "pointer",
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              borderRadius: "0.5rem",
-              transition:
-                "background-color 0.3s, color 0.3s, border-color 0.3s",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "2px solid #e5e7eb",
-              backgroundColor: "#FFFFFF",
-              color: "#1A202C",
-              ...(i + 1 === currentGroup && {
-                backgroundColor: "#f3f4f6",
-              }),
-            }}
-          >
-            <span style={{ fontSize: "1.5rem", fontWeight: "600" }}>
-              Grupo {i + 1}
-            </span>
-          </div>
-        ))}
-      </div>
+    <div className="container" >
+    <div >
+
     </div>
+    {Array.from({ length: numberGroups }, (_, i) => (
+      <div
+        onClick={() => setCurrentGroup(i + 1)}
+        key={i}
+        className={`group ${i + 1 === currentGroup ? "selected" : ""}`}
+        style={{fontSize: "1.125rem", fontWeight: "600"}}
+      >
+        GRUPO {i + 1}
+      </div>
+    ))}
+    
+  </div>
   );
 
   const clanImages = {
