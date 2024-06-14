@@ -102,7 +102,7 @@ const Proyectos: React.FC = () => {
   }, [studentCode, sectionId]);
 
   
-  if (!grupo) return "No se encontró líder";
+  if (!grupo) return "Buscando proyectos...";
   localStorage.setItem("miembros", JSON.stringify(grupo.members));
   console.log("miembros:", grupo.members);
   // const miembroLider = () => {
@@ -292,9 +292,9 @@ const Proyectos: React.FC = () => {
                       id="evaluation"
                       onChange={(e) => setFormEvaluation(e.target.value)}
                     >
-                      <option value="TA3">Tarea Academica 2</option>
-                      <option value="TA2">Tarea Academica 2</option>
                       <option value="TA1">Tarea Academica 1</option>
+                      <option value="TA2">Tarea Academica 2</option>
+                      <option value="TA3">Tarea Academica 3</option>
                       <option value="TF">Trabajo Final</option>
                     </select>
                   </div>
